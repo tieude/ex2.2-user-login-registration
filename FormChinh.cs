@@ -13,8 +13,11 @@ namespace GiaoDien_3Form
 {
     public partial class FormChinh : Form
     {
+        private string username;
         public FormChinh(string tenDangNhap)
         {
+             InitializeComponent();
+             this.username = tenDangNhap;
         }
 
         private async void FormChinh_Load(object sender, EventArgs e)
@@ -56,7 +59,7 @@ namespace GiaoDien_3Form
 
         private void btnDangXuat_Click(object sender, EventArgs e)
         {
-           
+           this.Close();
         }
     }
 }

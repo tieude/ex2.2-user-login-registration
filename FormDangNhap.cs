@@ -32,8 +32,21 @@ namespace GiaoDien_3Form
 
 
         private async void btnDangNhap_Click(object sender, EventArgs e)
-        {
-                         // Kiểm tra rỗng 
+        { 
+            // Hàm kiểm tra rỗng, nếu rỗng thì hiện thông báo lỗi và return luôn
+            if (string.IsNullOrWhiteSpace(txtTenDangNhap.Text) || string.IsNullOrWhiteSpace(txtMatKhau.Text))
+            {
+                lblLoi.Text = "Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu.";
+                return;
+            }
+            
+            // Kiểm tra định dạng username, nếu không đúng thì hiện thông báo lỗi và return luôn
+            if (!Regex.IsMatch(txtTenDangNhap.Text, @"^[a-zA-Z0-9_.-]{3,16}$"))
+            {
+                lblLoi.Text = "Tên đăng nhập hoặc mật khẩu không đúng."; 
+                return;
+            }
+            // Kiểm tra rỗng 
              string KetNoi = @"Server=localhost; Database=QuanLyNguoiDung; Trusted_Connection=True; TrustServerCertificate=True;";
              string sql = "SELECT Salt, MatKhauBam FROM Users WHERE TenDangNhap = @ten";
              string sqlUpdate = "UPDATE Users SET LanDangNhapCuoi = SYSDATETIME() WHERE TenDangNhap = @ten";
@@ -99,11 +112,13 @@ namespace GiaoDien_3Form
         }
         private void lnkDangKy_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+                FormDangKy fDangKy = new FormDangKy();
+                fDangKy.ShowDialog(); // Mở form đăng ký
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
         {
-
+                Application.Exit(); // Thoát Ứng dụng
         }
     }
 }
